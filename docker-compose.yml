@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  appointment-tg-bot:
+    build: .
+    command: python main.py
+    env_file:
+      - .env
+    volumes:
+      - ./src:/usr/src/app/
+    ports:
+      - "8002:80"
+
+networks:
+  default:
+    name: appointment-network
+    external: true
