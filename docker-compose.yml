@@ -2,7 +2,13 @@ version: "3.9"
 
 services:
   appointment-tg-bot:
-    build: .
+    container_name: appointment-tg-bot
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: dev
+    profiles:
+      - mariadb
     command: python main.py
     env_file:
       - .env
@@ -10,8 +16,54 @@ services:
       - ./src:/usr/src/app/
     ports:
       - "8002:80"
+    networks:
+      - appointment-network
+    depends_on:
+      appointment-db:
+        condition: service_healthy
+
+  appointment-db:
+    container_name: appointment-db
+    image: mariadb:10.7
+    profiles:
+      - mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_USER_ROOT: ${MARIADB_USER_ROOT}
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./src/db/alembic:/alembic
+    networks:
+      - appointment-network
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MARIADB_USER --password=$$MARIADB_PASSWORD
+      interval: 5s
+      timeout: 3s
+
+  db-initializer:
+    container_name: db-initializer
+    profiles:
+      - mariadb
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: mariadb
+    depends_on:
+      appointment-db:
+        condition: service_healthy
+    env_file:
+      - .env
+    networks:
+      - appointment-network
+    volumes:
+      - ./src/db/alembic:/alembic
+
 
 networks:
-  default:
+  appointment-network:
     name: appointment-network
     external: true

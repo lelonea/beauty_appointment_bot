@@ -1,4 +1,4 @@
-FROM python:3.11.3-buster
+FROM python:3.10-buster as base
 
 ENV PYTHONPATH=$PYTHONPATH:/usr/src/app/
 
@@ -11,5 +11,15 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r /requirements.txt
 
 COPY ./src /usr/src/app/
 
+FROM base as mariadb
 
-CMD ["python", "main.py"]
+RUN mkdir /alembic
+WORKDIR /alembic
+
+COPY src/db/alembic /alembic
+
+ENTRYPOINT ["bash","./migrate_db.sh"]
+
+FROM base as dev
+
+CMD bash
