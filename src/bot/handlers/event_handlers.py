@@ -9,6 +9,7 @@ from bot.bot import bot
 async def base_on_startup(dp: Dispatcher) -> None:
     pass
 
+
 async def on_startup(dp: Dispatcher) -> None:
     await base_on_startup(dp)
     logging.info(f"Set webhook {WEBHOOK_URL}")
