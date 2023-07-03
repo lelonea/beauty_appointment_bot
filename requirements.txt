@@ -10,3 +10,4 @@ alembic==1.11.1
 PyMySQL==1.1.0
 asyncmy==0.2.8
 httpx == 0.24.0
+aiogram_calendar==0.1.1
