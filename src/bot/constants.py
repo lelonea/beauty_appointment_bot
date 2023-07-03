@@ -8,7 +8,7 @@ HELP_MESSAGE = (
     f"{bold('Привет!')}\nЭто бот для мастеров.\n"
     "Нашёл ошибку или есть предложения по улучшению? Напиши нам: @leloneya @devexc\n"
     "Если хочешь поддержать разработку обновлений: "
-    f"{link('Донат', 'https://paypal.me/devexc?locale.x=en_US')}"
+    f"{link('Кошелёк для доната', 'https://paypal.me/devexc?locale.x=en_US')}"
 )
 
 START_MESSAGE = (

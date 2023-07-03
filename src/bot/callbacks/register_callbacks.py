@@ -14,11 +14,11 @@ class RegisterCallbackHandler(BaseCallbackHandler):
             logger.info(f"Registering user {callback_query.from_user.id}")
             await self._master_manager.register_user(callback_query.from_user)
             await callback_query.message.edit_text(
-                "Вы успешно зарегестрированы!",
+                "Вы успешно зарегистрированы!",
                 parse_mode=types.ParseMode.MARKDOWN,
             )
         except DuplicationException:
             await callback_query.message.edit_text(
-                "Вы уже зарегестрированы!",
+                "Вы уже зарегистрированы!",
                 parse_mode=types.ParseMode.MARKDOWN,
             )
