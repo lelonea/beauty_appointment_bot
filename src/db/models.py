@@ -39,6 +39,7 @@ class AvailableSlot(Base):
     date: Mapped[Date] = mapped_column(Date)
     time: Mapped[Time] = mapped_column(Time)
     master: Mapped["Master"] = relationship("Master", back_populates="available_dates")
+    appointment: Mapped["Appointment"] = relationship("Appointment", back_populates="available_slot")
 
 
 class Appointment(Base):
@@ -46,7 +47,9 @@ class Appointment(Base):
 
     master_id: Mapped[int] = mapped_column(ForeignKey('masters.id'))
     client_id: Mapped[int] = mapped_column(ForeignKey('clients.id'))
+    available_slot_id: Mapped[int] = mapped_column(ForeignKey('available_slots.id'))
     date: Mapped[Date] = mapped_column(Date)
     time: Mapped[Time] = mapped_column(Time)
     master: Mapped["Master"] = relationship("Master", back_populates="appointments")
     client: Mapped["Client"] = relationship("Client", back_populates="appointments")
+    available_slot: Mapped["AvailableSlot"] = relationship("AvailableSlot", back_populates="appointment")
