@@ -24,3 +24,6 @@ run: # Run bot
 	docker compose up appointment-tg-bot appointment-db db-initializer
 
 run_with_proxy: run_proxy run # Run bot with proxy
+
+create_migrations: # Create migrations
+	docker compose run --rm appointment-tg-bot ./db/alembic/create_migrations.sh
