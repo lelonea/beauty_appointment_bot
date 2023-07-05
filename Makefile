@@ -12,7 +12,7 @@ clean: # Clean project
 
 build: # Build project
 	docker network create appointment-network || exit 0
-	docker compose build --no-cache
+	docker compose build --no-cache appointment-tg-bot appointment-db db-initializer
 
 run_proxy: # Run proxy
 	docker compose -f docker-compose.proxy.yml stop appointment-proxy || exit 0
@@ -21,6 +21,9 @@ run_proxy: # Run proxy
 	sed -i '' -e "s#WEBHOOK_HOST=.*#WEBHOOK_HOST=$$(docker compose -f docker-compose.proxy.yml logs --tail 5 appointment-proxy | grep -oE 'https.*')#g" .env
 
 run: # Run bot
-	docker compose up appointment-tg-bot
+	docker compose up appointment-tg-bot appointment-db db-initializer
 
 run_with_proxy: run_proxy run # Run bot with proxy
+
+create_migrations: # Create migrations
+	docker compose run --rm appointment-tg-bot ./db/alembic/create_migrations.sh
