@@ -1,5 +1,6 @@
+from datetime import datetime
 from typing import List
-from sqlalchemy import ForeignKey, Date, Time, BigInteger
+from sqlalchemy import ForeignKey, Date, Time, BigInteger, DateTime
 from sqlalchemy import String
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
@@ -9,6 +10,11 @@ from sqlalchemy.orm import relationship
 
 class Base(DeclarativeBase):
     id: Mapped[int] = mapped_column(primary_key=True)
+    is_active: Mapped[bool] = mapped_column(default=True) # Bot can be blocked by user
+    language_code: Mapped[str] = mapped_column(String(8), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
 
 
 class AbstractUser(Base):
@@ -45,11 +51,7 @@ class AvailableSlot(Base):
 class Appointment(Base):
     __tablename__ = 'appointments'
 
-    master_id: Mapped[int] = mapped_column(ForeignKey('masters.id'))
     client_id: Mapped[int] = mapped_column(ForeignKey('clients.id'))
     available_slot_id: Mapped[int] = mapped_column(ForeignKey('available_slots.id'))
-    date: Mapped[Date] = mapped_column(Date)
-    time: Mapped[Time] = mapped_column(Time)
-    master: Mapped["Master"] = relationship("Master", back_populates="appointments")
     client: Mapped["Client"] = relationship("Client", back_populates="appointments")
     available_slot: Mapped["AvailableSlot"] = relationship("AvailableSlot", back_populates="appointment")

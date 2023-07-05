@@ -16,8 +16,6 @@ services:
       - ./src:/usr/src/app/
     ports:
       - "8002:80"
-    networks:
-      - appointment-network
     depends_on:
       appointment-db:
         condition: service_healthy
@@ -37,8 +35,6 @@ services:
       - "3309:3306"
     volumes:
       - ./src/db/alembic:/alembic
-    networks:
-      - appointment-network
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MARIADB_USER --password=$$MARIADB_PASSWORD
       interval: 5s
@@ -57,13 +53,11 @@ services:
         condition: service_healthy
     env_file:
       - .env
-    networks:
-      - appointment-network
     volumes:
       - ./src/db/alembic:/alembic
 
 
 networks:
-  appointment-network:
+  default:
     name: appointment-network
     external: true

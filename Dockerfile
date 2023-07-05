@@ -9,7 +9,6 @@ WORKDIR /usr/src/app/
 COPY requirements.txt /requirements.txt
 RUN pip install --upgrade pip && pip install --no-cache-dir -r /requirements.txt
 
-COPY ./src /usr/src/app/
 
 FROM base as mariadb
 
@@ -23,3 +22,9 @@ ENTRYPOINT ["bash","./migrate_db.sh"]
 FROM base as dev
 
 CMD bash
+
+FROM base as prod
+
+COPY ./src /usr/src/app/
+
+CMD ["python", "./main.py"]
