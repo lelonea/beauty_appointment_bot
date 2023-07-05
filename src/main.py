@@ -4,7 +4,6 @@ from bot.bot import dp
 from bot.handlers.event_handlers import on_shutdown, base_on_startup
 from settings import BOT_MODE, BotMode
 
-
 uvloop.install()
 
 
@@ -22,7 +21,6 @@ def run_webhook() -> None:
     from bot.handlers.event_handlers import on_startup
     from server.application import init_app
     from settings import WEBAPP_HOST, WEBAPP_PORT, WEBHOOK_PATH
-
 
     web_app = init_app()
     print(f"Start bot on {WEBHOOK_PATH}")

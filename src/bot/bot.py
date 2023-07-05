@@ -1,7 +1,9 @@
 from aiogram import Bot
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.dispatcher import Dispatcher
-from .handlers.command_handlers import send_welcome
+
+from bot.handlers.callback_handlers import CallbackHandlerPipeline
+from bot.handlers.command_handlers import send_welcome, send_help, send_timetable_options
 
 from settings import BOT_TOKEN
 
@@ -12,4 +14,8 @@ dp = Dispatcher(bot)
 dp.middleware.setup(LoggingMiddleware())
 
 # Commands
-dp.register_message_handler(send_welcome, commands=["start", "help"])
+dp.register_message_handler(send_welcome, commands=["start"])
+dp.register_message_handler(send_help, commands=["help"])
+dp.register_message_handler(send_timetable_options, commands=["timetable"])
+
+dp.register_callback_query_handler(CallbackHandlerPipeline())
