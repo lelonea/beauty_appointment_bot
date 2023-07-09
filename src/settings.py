@@ -1,19 +1,19 @@
 import logging
 import os
-from enum import Enum
 from urllib.parse import urljoin
 
+from core.schemas.common import BotMode, BotType
 
-class BotMode(Enum):
-    polling = "polling"
-    webhooks = "webhooks"
-
-
-BOT_MODE = BotMode(os.getenv("BOT_MODE", BotMode.polling.value).lower())
 
 logging.basicConfig(level=logging.INFO)
 
+# bot settings
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_MODE = BotMode(os.getenv("BOT_MODE", BotMode.polling.value).lower())
+BOT_TYPE = BotType(os.getenv("BOT_TYPE", BotType.master.value).lower())
+DEFAULT_LANGUAGE = os.getenv("DEFAULT_LANGUAGE", "ru")
+LOCALE_PATHS = os.path.join(os.path.dirname(__file__), "locales", BOT_TYPE.value)
+
 
 # webhook settings
 WEBHOOK_HOST = os.getenv("WEBHOOK_HOST")

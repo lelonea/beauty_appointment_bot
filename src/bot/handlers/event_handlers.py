@@ -2,12 +2,14 @@ import logging
 
 from aiogram import Dispatcher
 
+from core.impl.localization import Localization
 from settings import WEBHOOK_URL
 from bot.bot import bot
 
 
 async def base_on_startup(dp: Dispatcher) -> None:
-    pass
+    logging.info("Loading localization...")
+    Localization()
 
 
 async def on_startup(dp: Dispatcher) -> None:

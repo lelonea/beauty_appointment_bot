@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram_calendar import SimpleCalendar
 
-from db.schemas.callbacks import CallbackData, CallbackDataType
+from core.schemas.callbacks import CallbackData, CallbackDataType
 
 
 class Keyboards:

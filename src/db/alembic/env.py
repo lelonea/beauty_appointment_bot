@@ -28,6 +28,7 @@ try:
     from db.models import Base
     target_metadata = Base.metadata
 except Exception as e:
+    target_metadata = None
     print(e)
     print("CUSTOM METADATA IS IGNORED")
 
