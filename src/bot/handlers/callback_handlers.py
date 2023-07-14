@@ -2,7 +2,7 @@ from aiogram import types
 
 from bot.callbacks.register_callbacks import RegisterCallbackHandler
 from bot.callbacks.timetable_callback import TimeTableOptionsCallbackHandler
-from db.schemas.callbacks import CallbackDataType, CallbackData
+from core.schemas.callbacks import CallbackDataType, CallbackData
 
 
 class CallbackHandlerPipeline:

@@ -4,7 +4,7 @@ from aiogram import types
 
 from bot.handlers.keyboards import CalendarKeyboards
 from core.api.callback_handler import BaseCallbackHandler
-from db.schemas.callbacks import CallbackData
+from core.schemas.callbacks import CallbackData
 
 logger = logging.getLogger(__name__)
 
